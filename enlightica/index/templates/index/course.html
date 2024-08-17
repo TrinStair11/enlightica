@@ -1,0 +1,60 @@
+{% extends 'index/base.html' %}
+
+{% block title %}
+    Course
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="mb-4">{{ course.name }}</h1>
+        <hr>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card mb-4">
+                    <div class="card-body text-start">
+                        <h5 class="card-title">{{ course.name }}</h5>
+                        <p class="card-text">{{ course.description }}</p>
+                        <p class="card-text"><strong>Price:</strong> ${{ course.price }}</p>
+                        <p class="card-text"><strong>Duration:</strong> {{ course.duration }} weeks</p>
+                        <p class="card-text"><strong>Category:</strong> <a href="/category/{{ course.category.id }}" class="text-primary">{{ course.category.name }}</a></p>
+                    </div>
+                </div>
+
+                <!-- Purchase button -->
+                <form method="post" action="/payment" class="mb-4 text-start">
+                    {% csrf_token %}
+                    <input type="hidden" name="course_id" value="{{ course.id }}">
+                    <button type="submit" class="btn btn-success btn-lg">Purchase Now</button>
+                </form>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">Additional Information</h4>
+                    </div>
+                    <div class="card-body text-start">
+                        <p><strong>Instructor:</strong> {{ course.instructor }}</p>
+                        <p><strong>Start Date:</strong> {{ course.start_date }}</p>
+                        <p><strong>Enrollment Deadline:</strong> {{ course.enrollment_deadline }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5 mb-5">
+            <div class="col-md-12">
+                <h4 class="mb-3 text-start">Lessons</h4>
+                <ul class="list-group text-start">
+                    {% for lesson in lessons %}
+                        <li class="list-group-item d-flex align-items-center">
+                            <span class="me-2">{{ forloop.counter }}.</span>
+                            <a href="/lesson/{{ lesson.id }}" class="text-decoration-none">{{ lesson.name }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

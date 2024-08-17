@@ -1,0 +1,12 @@
+{% extends 'index/base.html' %}
+
+{% block title %}
+    Lesson
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h1>{{ lesson.name }}</h1>
+        Content: {{ lesson.content }}
+    </div>
+{% endblock %}
